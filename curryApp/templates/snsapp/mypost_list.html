@@ -1,0 +1,31 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<h1><a href='{% url "snsapp:home" %}' class="text-dark">NaanCurrys<b>SNS</b></a></h1>
+<h2>{{user}}</h2>
+{% if user in connection.0.following.all %}
+<a href="{% url 'snsapp:follow-home' user.pk %}" class="btn btn-danger ms-3" tabindex="-1" role="button" aria-disabled="true">フォロー解除</a>
+{% else %}
+<a href="{% url 'snsapp:follow-home' user.pk %}" class="btn btn-primary ms-3" tabindex="-1" role="button" aria-disabled="true">フォロー</a>
+{% endif %}
+
+<div class="container mt-4 mb-5">
+    {% for item in object_list %}
+    <div class="card">
+        <h5 class="card-header"><a href='{% url "snsapp:mypost" item.user_id %}' class="text-dark">{{item.user}}</a> - {{item.created_at}}</h5>
+        <div class="card-body">
+            <h5 class="card-title">{{item.content}}</h5>
+            {% if request.user in item.like.all %}
+            <a href="{% url 'snsapp:like-detail' item.pk %}">
+                <button type="button" class="btn btn-warning">{{item.like.count}} Naan!</button>
+            </a>
+            {% else %}
+            <a href="{% url 'snsapp:like-detail' item.pk %}">
+                <button type="button" class="btn btn-outline-warning">{{item.like.count}} Naan!</button>
+            </a>
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock content %}

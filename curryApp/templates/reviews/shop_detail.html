@@ -1,0 +1,110 @@
+{% extends 'layout.html' %}
+{% block content %}
+<div>
+    <h3><a href='{% url "reviews:index" %}' class="text-dark">NaanCurrys<b>Review</b></a></h3>
+    {% if user.is_superuser %}
+        | <a href='{% url "reviews:shopUpdate" shop.pk %}'>編集</a>
+        | <a href='{% url "reviews:shopDelete" shop.pk %}'>削除</a>
+    {% endif %}
+</div>
+
+<h1>{{ shop.name }}</h1>
+
+<h3>総合評価：{{ shop.ovr_avg|floatformat:1 }}</h3>
+<canvas id="myChart"></canvas>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
+<script>
+
+    var ctx = document.getElementById("myChart");
+    var myChart = new Chart(ctx, {
+        //グラフの種類
+        type: 'radar',
+        //データの設定
+        data: {
+            //データ項目のラベル
+            labels: ["カレー", "ナン", "接客", "内装", "トイレ"],
+            //データセット
+            datasets: [{
+                //背景色
+                backgroundColor: "rgba(51,255,51,0.5)",
+                //枠線の色
+                borderColor: "rgba(51,255,51,1)",
+                //結合点の背景色
+                pointBackgroundColor: "rgba(51,255,51,1)",
+                //結合点の枠線の色
+                pointBorderColor: "#fff",
+                //結合点の背景色（ホバ時）
+                pointHoverBackgroundColor: "#fff",
+                //結合点の枠線の色（ホバー時）
+                pointHoverBorderColor: "rgba(51,255,51,1)",
+                //結合点より外でマウスホバーを認識する範囲（ピクセル単位）
+                hitRadius: 5,
+                //グラフのデータ
+                data: ['{{shop.cur_avg}}', '{{shop.naa_avg}}', '{{shop.ser_avg}}', '{{shop.int_avg}}', '{{shop.toi_avg}}']
+            }]
+        },
+        //オプションの設定
+        options: {
+            scale: {
+                ticks: {
+                    // 最小値の値を0指定
+                    beginAtZero: true,
+                    min: 0,
+                    stepSize: 1,
+                    // 最大値を指定
+                    max: 5,
+                },
+                pointLabels: {
+                    fontSize: 10
+                }
+            },
+            //ラベル非表示
+            legend: {
+                display: false,
+            }
+
+        }
+    });
+
+</script>
+
+<table class='table table-hover'>
+    <tr>
+        <th>カレー</th><th>ナン　</th><th>接客　</th><th>内装　</th><th>トイレ</th>
+    </tr>
+    <tr>
+        <td>{{ shop.cur_avg|floatformat:1 }}</td>
+        <td>{{ shop.naa_avg|floatformat:1 }}</td>
+        <td>{{ shop.ser_avg|floatformat:1 }}</td>
+        <td>{{ shop.int_avg|floatformat:1 }}</td>
+        <td>{{ shop.toi_avg|floatformat:1 }}</td>
+    </tr>
+</table>
+
+<div>
+    <p>平均価格:{{ shop.pri_avg|floatformat:1 }}円</p>
+    <p>住所：{{ shop.address }}</p>
+</div>
+<iframe id='map'
+    src='https://www.google.com/maps/embed/v1/place?key={{ maps_api }}&amp;q={{ shop.address }}'
+    width='100%'
+    height='320'
+    frameborder='0'>
+</iframe>
+
+<div class="container pb-5">
+    <h3>レビュー</h3>
+    <a href="{% url 'reviews:reviewCreate' %}">
+        <button type="button" class="btn btn-secondary mb-4">レビューを投稿</button>
+    </a>
+    {% for review in reviews %}
+    <a href="{% url 'reviews:reviewDetail' review.pk %}" class="text-dark">
+        <div class="alert alert-success" role="alert">
+            <p>投稿者：{{review.author}} 総合評価：{{review.ovrpoint}}</p>
+            <p>{{review.created_at}}</p>
+        </div>
+    </a>
+    {% endfor %}
+</div>
+{% endblock %}

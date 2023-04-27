@@ -1,0 +1,21 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<h1 class="text-center"><a href='{% url "snsapp:home" %}' class="text-dark">NaanCurrys<b>SNS</b></a></h1>
+<ul class="nav nav-tabs">
+    <li class="nav-item">
+      <a class="nav-link text-dark" href='{% url "snsapp:home" %}'>All</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link text-dark" href='{% url "snsapp:follow-list" %}'>Following</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href='{% url "snsapp:create" %}'>Cackle</a>
+    </li>
+</ul>
+
+<form method="post" class="mt-3">{% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="投稿">
+</form>
+{% endblock content %}

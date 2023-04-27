@@ -1,0 +1,45 @@
+{% extends 'layout.html' %}
+{% block content %}
+    <h1>NaanCurrys<b>Reviews</b></h1>
+    {% if user.is_superuser %}
+        <div>
+            <a href='{% url "reviews:shopCreate" %}' class="text-dark">
+                <button type="button" class="btn btn-secondary mb-4">新しいお店を追加</button></a>
+        </div>
+    {% endif %}
+    {% if user.is_authenticated %}
+        <div>
+            <a href='{% url "reviews:reviewCreate" %}' class="text-dark">
+                <button type="button" class="btn btn-secondary mb-4">レビューを投稿</button></a>
+        </div>
+    {% endif %}
+    {% if searchForm %}
+	    <form action='{% url "reviews:index" %}' method='get'>
+	        <div class='form-group'>
+	            {{ searchForm }}
+	            <input type="submit" class="btn btn-outline-primary" value="OK" />
+	            <a href="{% url 'reviews:index' %}" class="btn btn-outline-secondary">クリア</a>
+	        </div>
+	    </form>
+	{% endif %}
+    <table id="shop-table" class='table table-hover'>
+        <thead>
+            <tr>
+                <th>店名</th><th>平均総合評価</th><th>平均価格</th><th>住所</th>
+            </tr>
+        </thead>
+        {% for shop in shops %}
+        <tr>
+            <td><a href='{% url "reviews:shopDetail" shop.pk %}' class="text-dark">{{ shop.name }}</a></td>
+            <td>{{ shop.ovr_avg|floatformat:1 }}</td>
+            <td>{{ shop.pri_avg|floatformat:1 }}</td>
+            <td>{{ shop.address }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <script>
+    $(document).ready(function() {
+        $('#shop-table').tablesorter();
+    });
+    </script>
+{% endblock %}
