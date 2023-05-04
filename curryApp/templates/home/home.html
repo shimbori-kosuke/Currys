@@ -1,7 +1,8 @@
 {% extends 'layout.html' %}
 {% block content %}
     <h1 class="text-center pt-5 pb-5">Naan<b>Currys</b>web</h1>
-    <h2><a href='{% url "reviews:index" %}' class="text-dark">NaanCurrys<b>Reviews</b></a></h2>
-    <h2><a href="{% url 'snsapp:home' %}" class="text-dark">NaanCurrys<b>SNS</b></a></h2>
-    <h2><a href="{% url 'chat:index' %}" class="text-dark">NaanCurrys<b>Chat</b></a></h2>
+    <h2><a href='{% url "reviews:index" %}' class="text-dark">Currys<b>Reviews</b></a></h2>
+    <h2><a href="{% url 'snsapp:home' %}" class="text-dark">Currys<b>SNS</b></a></h2>
+    <h2><a href="{% url 'chat:index' %}" class="text-dark">Currys<b>Chat</b></a></h2>
+    <h2><a href="{% url 'image:home' %}" class="text-dark">Currys<b>RecipeandImageGenerater</b></a></h2>
 {% endblock %}
