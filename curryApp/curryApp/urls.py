@@ -24,4 +24,5 @@ urlpatterns = [
     path('chat/', include('chat.urls')),
     path('reviews/', include('reviews.urls')),
     path('snsapp/', include('snsapp.urls')),
+    path('image/', include('image.urls')),
 ]

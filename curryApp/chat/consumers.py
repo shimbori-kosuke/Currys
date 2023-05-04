@@ -34,7 +34,6 @@ class _BaseConsumer(AsyncJsonWebsocketConsumer):
             pk = int(self.scope['url_route']['kwargs']['room_id'])
             self.room = await database_sync_to_async(models.Room.objects.get)(pk=pk)
             self.group_name = f'{self.prefix}{pk}'
-            # 修正部分：is_assignedメソッドの実行結果による分岐処理を追加
             is_assigned = await database_sync_to_async(self.room.is_assigned)(user)
 
             # 参加可能な場合のみacceptする

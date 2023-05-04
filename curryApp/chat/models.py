@@ -9,7 +9,7 @@ User = get_user_model()
 
 # チャットルームの定義
 class RoomQueryset(models.QuerySet):
-    # 修正部分：フィルタリング処理を追加
+    
     def _related_user(self, user=None):
         try:
             queryset = self.filter(models.Q(host=user) | models.Q(participants__in=[user.pk]))
@@ -20,7 +20,7 @@ class RoomQueryset(models.QuerySet):
 
     def filtering(self, user=None, keywords='', order='-created_at'):
         words = keywords.split()
-        # 修正部分：参加可能なチャットルームのみをフィルタリングする処理を追加
+        
         queryset = self._related_user(user=user)
 
         if words:
@@ -33,7 +33,7 @@ class Room(models.Model):
     host = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(gettext_lazy('Room name'), max_length=64)
     description = models.TextField(gettext_lazy('Description'), max_length=128)
-    # 修正部分：participantsを追加
+    
     participants = models.ManyToManyField(User, related_name='rooms', verbose_name=gettext_lazy('Participants'), blank=True)
     created_at = models.DateTimeField(gettext_lazy('Created time'), default=timezone.now)
 
@@ -51,7 +51,6 @@ class Room(models.Model):
     def is_host(self, user=None):
         return user is not None and self.host.pk == user.pk
 
-    # 修正部分：is_assignedメソッドを追加
     def is_assigned(self, user=None):
         try:
             _ = self.participants.all().get(pk=user.pk)
