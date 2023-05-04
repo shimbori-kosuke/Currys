@@ -4,7 +4,7 @@
 
 <section>
 
-  <p>生成したい画像のイメージ、簡単な説明文を１文で入力してください。<br>
+  <p>作りたいカレーのイメージ、簡単な説明文を１文で入力してください。<br>
   <form method=POST id="imgForm">
     {% csrf_token %}
     <div class="mb-3">
@@ -29,12 +29,12 @@
 
 <strong>レシピ：</strong><br>
 <div class="box">
-    <p class="text_height" id="gpt-response">{{response}}</p>
+    <p class="text_height" id="gpt-response">{{response|linebreaks}}</p>
 </div>
 <br><br>
 <table cellpadding="5">
 <tr>
-    <strong>生成された画像：</strong><br>
+    <strong>完成イメージ：</strong><br>
     <td class="box6" style="text-align: center"><img id="img1" width="490px" height="490px" ></td>
 </tr>
 </table>
