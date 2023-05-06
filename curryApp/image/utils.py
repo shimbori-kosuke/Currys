@@ -34,13 +34,16 @@ def chat_gpt(prompt):
         model = "text-davinci-003",
         prompt= prompt,
         temperature=0.3,
-        max_tokens=300,
+        max_tokens=200,
         top_p=1.0,
         frequency_penalty=0.0,
         presence_penalty=0.0
 
     )
-    response = (response["choices"][0]["text"]).strip()
+    response = response["choices"][0]["text"]
+
+    print(response)
+
     return response
 
 def create_prompt(input_text, file_name):
