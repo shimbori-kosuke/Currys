@@ -1,7 +1,7 @@
 {% extends 'layout.html' %}
 {% block content %}
 <div>
-    <h3><a href='{% url "reviews:index" %}' class="text-dark">NaanCurrys<b>Review</b></a></h3>
+    <h1><a href='{% url "reviews:index" %}' class="text-dark">NaanCurrys<b>Reviews</b></a></h1>
     {% if user.is_superuser %}
         | <a href='{% url "reviews:shopUpdate" shop.pk %}'>編集</a>
         | <a href='{% url "reviews:shopDelete" shop.pk %}'>削除</a>
@@ -69,7 +69,7 @@
 
 </script>
 
-<table class='table table-hover'>
+<table class='table table-bordered'>
     <tr>
         <th>カレー</th><th>ナン　</th><th>接客　</th><th>内装　</th><th>トイレ</th>
     </tr>

@@ -22,15 +22,15 @@
 	        </div>
 	    </form>
 	{% endif %}
-    <table id="shop-table" class='table table-hover'>
-        <thead>
+    <table id="shop-table" class='table table-hover table-bordered mt-3' data-sortlist="[[1,1]]">
+        <thead class="table-light">
             <tr>
                 <th>店名</th><th>平均総合評価</th><th>平均価格</th><th>住所</th>
             </tr>
         </thead>
         {% for shop in shops %}
-        <tr>
-            <td><a href='{% url "reviews:shopDetail" shop.pk %}' class="text-dark">{{ shop.name }}</a></td>
+        <tr class="position-relative">
+            <td><a href='{% url "reviews:shopDetail" shop.pk %}' class="text-dark stretched-link">{{ shop.name }}</a></td>
             <td>{{ shop.ovr_avg|floatformat:1 }}</td>
             <td>{{ shop.pri_avg|floatformat:1 }}</td>
             <td>{{ shop.address }}</td>
